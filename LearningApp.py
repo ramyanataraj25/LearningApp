@@ -9,3 +9,8 @@ class User:
         self.name = name
         self.grade = grade
         self.reason = reason
+        
+class Vocab:
+    def __init__(self, grade, name):
+        self.grade = grade
+        self.name = name
