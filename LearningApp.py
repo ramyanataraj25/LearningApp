@@ -14,3 +14,9 @@ class Vocab:
     def __init__(self, grade, name):
         self.grade = grade
         self.name = name
+
+class Summary:
+    def __init__(self, math, vocab, grammar):
+            self.math = math
+            self.vocab = vocab
+            self.grammar = grammar 
