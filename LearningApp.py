@@ -19,4 +19,10 @@ class Summary:
     def __init__(self, math, vocab, grammar):
             self.math = math
             self.vocab = vocab
-            self.grammar = grammar 
+            self.grammar = grammar
+ 
+class Grammar:
+    def __init__(self, name, grade, feedback):
+	self.name = name
+	self.grade = grade
+	self.feedback = feedback
