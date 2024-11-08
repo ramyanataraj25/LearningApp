@@ -28,9 +28,7 @@ class User:
     def grade_level(self):
         """ Uses regular expressions to match the grade level given by the user
         with the specificed spelling given by this program for kindergarten,
-        first, and second grade. Given the specific grade given by the user is 
-        then prompted to choose if they want to learn at, below, or above grade
-        level.
+        first, and second grade.
         
         Returns:
             str: returns the matched grade level given by the user
