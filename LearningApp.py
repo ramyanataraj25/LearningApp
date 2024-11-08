@@ -23,7 +23,7 @@ class User:
         """
         self.name = name
         self.grade = grade
-        self.subjects = subjects
+        self.subjects = []
 
     def grade_level(self, grade):
         """ Uses regular expressions to match the grade level given by the user
