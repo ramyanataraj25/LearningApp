@@ -23,15 +23,14 @@ class User:
         """
         self.name = name
         self.grade = grade
-        self.subjects = []
+        self.subjects = subjects
 
-    def grade_level(self, grade):
+    def grade_level(self):
         """ Uses regular expressions to match the grade level given by the user
         with the specificed spelling given by this program for kindergarten,
-        first, and second grade.
-        
-        Args:
-            grade (str): grade given in the user's information
+        first, and second grade. Given the specific grade given by the user is 
+        then prompted to choose if they want to learn at, below, or above grade
+        level.
         
         Returns:
             str: returns the matched grade level given by the user
@@ -41,33 +40,38 @@ class User:
             expression
         """
         
-        regex = r"""
-            (?x)
-            ^
-            ([K]|K\w+|[1]|1\w+|F\w+|[2]|2\w+|S\w+)$
-            """
-        if re.search(regex, grade):
-            match = re.search(regex, grade)
-            self.grade = match.group(0)
+        regex = r"([K]|K\w+|[1]|1\w+|F\w+|[2]|2\w+|S\w+)$"
+        match = re.search(regex, self.grade)
         
-        return self.grade
+        if match:
+            grade_given = match.group(0)
+        
+            if grade_given in ["K", "Kindergarten"]:
+                self.grade = "K"
+            elif grade_given in ["1", "1st", "First"]:
+                self.grade = "1"
+            elif grade_given in ["2", "2nd", "Second"]:
+                self.grade = "2"
+            
+        return f"""You will be doing questions for {self.grade}! You have 
+    choosen to do practice in {self.subjects}."""
+            
     
 
-user1 = User("Sarah","Kindergarten","Math")
+user1 = User("Sarah","Kindergarten",["Math"])
 print(user1.name)
-print(user1.grade_level(user1.grade))
-print(user1.subjects)
+print(user1.grade_level())
 
     
 
 # Harshitha's Math Class
-# import MathQ
+# Math class
 
 # Tatyana's Vocab Class
-# import Vocab
+# Vocab Class
 
 # Nivitha's Summary Class
-# import Summary
+# Summary Class
 
-# Jess's Grammer Class
-# import Grammar
+# Jess's Grammar Class
+# Grammar Class
