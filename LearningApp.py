@@ -17,9 +17,9 @@ class User:
         
         Args:
             name (str): name of the student using the app
-        grade (str): grade level the student is in (either K, 1st, or 2nd)
-        subjects (list): list of subjects the student wants to imporve in
-            can be 1 to all subjects
+            grade (str): grade level the student is in (either K, 1st, or 2nd)
+            subjects (list): list of subjects the student wants to imporve in
+                can be 1 to all subjects
         """
         self.name = name
         self.grade = grade
