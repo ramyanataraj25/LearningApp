@@ -12,18 +12,21 @@ class User:
         subjects (list): list of subjects the student wants to imporve in
             can be 1 to all subjects 
     """
-    def __init__(self, name, grade, subjects):
+    def __init__(self):
         """ Creates an instance of the user class.
         
         Args:
             name (str): name of the student using the app
             grade (str): grade level the student is in (either K, 1st, or 2nd)
-            subjects (list): list of subjects the student wants to imporve in
+            subjects (list): list of subjects the student wants to improve in
                 can be 1 to all subjects
         """
-        self.name = name
-        self.grade = grade
-        self.subjects = subjects
+        self.name = input("What is your name? ")
+        self.grade = input(f"Hi {self.name}, what grade are you learning in?" + 
+                           " Options are Kindergarten through 2nd grade.: ")
+        self.subjects = input(f"Hi {self.name}, you are doing questions in " +
+                        f"{self.grade}. What subjects are you improving in?" +
+                        " Options are Math, Vocab, Grammar.: ")
 
     def grade_level(self):
         """ Uses regular expressions to match the grade level given by the user
@@ -47,16 +50,16 @@ class User:
             if grade_given in ["K", "Kindergarten"]:
                 self.grade = "K"
             elif grade_given in ["1", "1st", "First"]:
-                self.grade = "1"
+                self.grade = "1st"
             elif grade_given in ["2", "2nd", "Second"]:
-                self.grade = "2"
+                self.grade = "2nd"
             
-        return f"""You will be doing questions for {self.grade}! You have 
-    choosen to do practice in {self.subjects}."""
+        return (f"You will be doing questions for {self.grade}!" +
+    f" You have choosen to do practice in {self.subjects}.")
             
     
 
-user1 = User("Sarah","Kindergarten",["Math"])
+user1 = User()
 print(user1.name)
 print(user1.grade_level())
 
