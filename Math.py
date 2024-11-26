@@ -15,22 +15,25 @@ class MathQ:
         questions (set of str): each question that would be provided to the user
         answers (set of int): the answers to each respective question
     """
-    def __init__(self, grade, max_questions):
+    def __init__(self, grade, max_questions = 10):
         """
         Initializes an instance of the user learning in the Math mode
         
         Arguments:
             grade (str): the grade of the user
-            max_questions (int): the maximum questions a user wants to have
+            max_questions (int): the maximum questions a user wants to have, the 
+            default number is 10
         
         Side effects:
             Initializes the attributes related to a set of Math questions
         """
         self.grade = grade
         self.max_questions = max_questions
-        self.ops = []
+        if grade == "K" or grade == "1" or grade == "2":
+            self.ops = ["+", "-"]
         self.questions = []
         self.answers = []
+        self.user_ans = []
         
     def get_questions(self):
         """
@@ -41,7 +44,6 @@ class MathQ:
         """
         countq = 1
         if self.grade == "K":
-            self.ops = ["+", "-"]
             
             while countq <= self.max_questions:
                 val1 = random.randint(0, 9)
@@ -50,42 +52,59 @@ class MathQ:
                 if val1 > val2:
                     countq = countq + 1
                     self.questions.append(f"{val1} {self.ops[this_ops]} {val2}")
-                    self.answers.append(eval(f"{int(val1)} {self.ops[this_ops]} \
+                    self.answers.append(eval(f"{int(val1)} {self.ops[this_ops]}\
                     {int(val2)}"))
                     
             
         elif self.grade == "1":
-            self.ops = ["+", "-"]
-            for num in range(self.max_questions):
+            while countq <= self.max_questions:
                 val1 = random.randint(0, 99)
                 val2 = random.randint(0, 99)
                 this_ops = random.randint(0, 1)
                 if val1 > val2:
+                    countq = countq + 1
                     self.questions.append(f"{val1} {self.ops[this_ops]} {val2}")
-                    self.answers.append(eval(f"{int(val1)} {self.ops[this_ops]} \
+                    self.answers.append(eval(f"{int(val1)} {self.ops[this_ops]}\
                     {int(val2)}"))
             
         elif self.grade == "2":
-            self.ops = ["+", "-"]
-            for num in range(self.max_questions):
+            
+            while countq <= self.max_questions:
                 val1 = random.randint(0, 999)
                 val2 = random.randint(0, 999)
                 this_ops = random.randint(0, 1)
                 if val1 > val2:
+                    countq = countq + 1
                     self.questions.append(f"{val1} {self.ops[this_ops]} {val2}")
-                    self.answers.append(eval(f"{int(val1)} {self.ops[this_ops]} \
+                    self.answers.append(eval(f"{int(val1)} {self.ops[this_ops]}\
                     {int(val2)}"))
+                    
+    def math_questions (self):
+        self.user_ans = [input(f"{q} = ") for q in self.questions]
+    
+    def score (self):
+        num_correct = 0
+        for a in self.user_ans:
+            for correct_a in self.answers:
+                if str(a) == str(correct_a):
+                    num_correct = num_correct + 1
+        print(num_correct)
+        percent_correct = num_correct / len(self.questions)
+        return f"{percent_correct * 100}%"
+        
 
-"""               
+"""
 def main():
-    q = MathQ("K", 10)
-    print(q.get_questions())
+    q = MathQ("K",3)
+    q.get_questions()
+    print(q.questions)
+    print(q.answers)
+    q.math_questions()
+    print(q.score())
     
 if __name__ == "__main__":
     main()
-"""
-        
-    
+"""               
                 
             
         
