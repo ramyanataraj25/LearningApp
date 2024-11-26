@@ -11,9 +11,10 @@ class MathQ:
         before advancing in level
         max_questions (int): the maximum number of questions the user wants to 
         answer
-        ops (set of int): the operators used in math questions
-        questions (set of str): each question that would be provided to the user
-        answers (set of int): the answers to each respective question
+        ops (list of str): the operators used in math questions
+        questions (list of str): each question that would be provided to the user
+        answers (list of int): the answers to each respective question
+        user_ans (list of str): the answers the user provides for each question
     """
     def __init__(self, grade, max_questions = 10):
         """
@@ -80,15 +81,26 @@ class MathQ:
                     {int(val2)}"))
                     
     def math_questions (self):
+        """
+        Gets user's answers to generated questions
+        
+        Side effects:
+            Prints each question and stores input in the attribute user_ans
+        """
         self.user_ans = [input(f"{q} = ") for q in self.questions]
     
     def score (self):
+        """
+        Computes score in percentage that the user gets for their play
+        
+        Returns:
+            The percentage of correct answers
+        """
         num_correct = 0
         for a in self.user_ans:
             for correct_a in self.answers:
                 if str(a) == str(correct_a):
                     num_correct = num_correct + 1
-        print(num_correct)
         percent_correct = num_correct / len(self.questions)
         return f"{percent_correct * 100}%"
         
