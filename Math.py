@@ -102,7 +102,7 @@ class MathQ:
                 if str(a) == str(correct_a):
                     num_correct = num_correct + 1
         percent_correct = num_correct / len(self.questions)
-        return f"{percent_correct * 100}%"
+        return percent_correct * 100
         
 
 """
