@@ -28,7 +28,7 @@ def vocab_choosen(self):
     #vocabQs = vocabGenerate.split("&")[0]
     correct_answers = vocabGenerate.split("&")[1]
     #print(vocabQs)
-    print(vocabGenerate)
+    #print(vocabGenerate)
     userAnswer = input("\nWhat is the answer?: ")
     user_answers.append(userAnswer)
     return [correct_answers, user_answers]
@@ -157,7 +157,8 @@ class User:
 def main():
     user1 = User()
     print(user1.grade_level())
-    print(user1.subjects_choosen())
+    user1.subjects_choosen()
+    # don't print user1.subjects_chosen. When you do, you are getting None.
     
 if __name__ == "__main__":
     main()

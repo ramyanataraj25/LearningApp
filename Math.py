@@ -107,7 +107,7 @@ class MathQ:
 
 
 def main():
-    q = MathQ("1", 3)
+    q = MathQ("1", 7)
     q.get_questions()
     print(q.questions)
     print(q.answers)
