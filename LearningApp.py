@@ -46,10 +46,14 @@ def math_choosen(self):
     count = input("How many questions would you like to get?: ")
     count = int(count)
     mathUser = MathQ(self.grade,count)
-    mathUser.get_questions()
     print(mathUser.questions)
     mathUser.math_questions()
-    print(mathUser.score())
+    if mathUser.score() < 100.0:
+        answers = mathUser.answers
+        print(f"You scored: {mathUser.score()}." + 
+              f"The correct answers were {answers}")
+    else:
+         print(f"You scored: {mathUser.score()}")
 
 def checkAnswer(answers, userAnswers):
     """ Checks answers given by the user with the correct answers. Counts how
