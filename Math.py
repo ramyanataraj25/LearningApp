@@ -32,7 +32,7 @@ class MathQ:
         self.max_questions = max_questions
         if grade == "K" or grade == "1" or grade == "2":
             self.ops = ["+", "-"]
-        self.questions = set()
+        self.questions = []
         self.answers = []
         self.user_ans = []
         
@@ -52,7 +52,7 @@ class MathQ:
                 this_ops = random.randint(0, 1)
                 if val1 > val2:
                     countq = countq + 1
-                    self.questions.add(f"{val1} {self.ops[this_ops]} {val2}")
+                    self.questions.append(f"{val1} {self.ops[this_ops]} {val2}")
                     self.answers.append(eval(f"{int(val1)} {self.ops[this_ops]}\
                     {int(val2)}"))
                     
@@ -64,7 +64,7 @@ class MathQ:
                 this_ops = random.randint(0, 1)
                 if val1 > val2:
                     countq = countq + 1
-                    self.questions.add(f"{val1} {self.ops[this_ops]} {val2}")
+                    self.questions.append(f"{val1} {self.ops[this_ops]} {val2}")
                     self.answers.append(eval(f"{int(val1)} {self.ops[this_ops]}\
                     {int(val2)}"))
             
@@ -76,7 +76,7 @@ class MathQ:
                 this_ops = random.randint(0, 1)
                 if val1 > val2:
                     countq = countq + 1
-                    self.questions.add(f"{val1} {self.ops[this_ops]} {val2}")
+                    self.questions.append(f"{val1} {self.ops[this_ops]} {val2}")
                     self.answers.append(eval(f"{int(val1)} {self.ops[this_ops]}\
                     {int(val2)}"))
                     
@@ -105,9 +105,9 @@ class MathQ:
         return percent_correct * 100
         
 
-"""
+
 def main():
-    q = MathQ("K",3)
+    q = MathQ("1", 3)
     q.get_questions()
     print(q.questions)
     print(q.answers)
@@ -116,7 +116,7 @@ def main():
     
 if __name__ == "__main__":
     main()
-"""       
+       
                 
             
         
