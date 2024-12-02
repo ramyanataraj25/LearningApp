@@ -2,6 +2,39 @@ import re
 from Math import MathQ
 from learning_app_vocab import Vocab
 
+def math_choosen(self):
+    """ If the user chooses to work on math, this method is called and uses
+    the Math class to instantiate a user, and generate math questions.
+    
+    Returns:
+        list: list of the correct answers and the user's answers
+    
+    Side effects:
+        prints each math question for the grade choosen, prints thh final score,
+        and stores user's answers as input
+    """
+    count = input("How many questions would you like to get?: ")
+    count = int(count)
+    mathUser = MathQ(self.grade,count)
+    mathUser.get_questions()
+    print(mathUser.questions)
+    
+    attempts = 0
+    
+    for attempt in range(3):
+        question = mathUser.math_questions()
+        attempts = attempts_taken(attempt)
+        if question != mathUser.answers and attempt < 2:
+            print("Try Again")
+        else:
+            break
+
+    if mathUser.score() < 100.0:
+        print(f"You scored: {mathUser.score()}% in {attempts} attempts." + 
+              f"The correct answers were {mathUser.answers}")
+    else:
+         print(f"You scored: {mathUser.score()}% in {attempts} attempts.")
+
 def vocab_choosen(self):
     """ If the user chooses to work on vocab, this method is called and uses
     the Vocab class to instantiate a user, and generate vocab questions.
@@ -33,29 +66,6 @@ def vocab_choosen(self):
     user_answers.append(userAnswer)
     return [correct_answers, user_answers]
 
-def math_choosen(self):
-    """ If the user chooses to work on math, this method is called and uses
-    the Math class to instantiate a user, and generate math questions.
-    
-    Returns:
-        list: list of the correct answers and the user's answers
-    
-    Side effects:
-        prints each math question for the grade choosen, prints thh final score,
-        and stores user's answers as input
-    """
-    count = input("How many questions would you like to get?: ")
-    count = int(count)
-    mathUser = MathQ(self.grade,count)
-    mathUser.get_questions()
-    print(mathUser.questions)
-    mathUser.math_questions()
-    if mathUser.score() < 100.0:
-        print(f"You scored: {mathUser.score()}%." + 
-              f"The correct answers were {mathUser.answers}")
-    else:
-         print(f"You scored: {mathUser.score()}%")
-
 def checkAnswer(answers, userAnswers):
     """ Checks answers given by the user with the correct answers. Counts how
     many answers were correct, and returns count
@@ -75,7 +85,11 @@ def checkAnswer(answers, userAnswers):
         if word in answers:
             userCorrectAs += 1
         return f"You got {userCorrectAs}/3 correct!"
-    
+
+def attempts_taken(attempt):
+    attempts = 1
+    attempts += attempt
+    return attempts
 
 class User:
     """ LearningApp created for students in kindergarten to second grade, to 
@@ -158,7 +172,6 @@ def main():
     user1 = User()
     print(user1.grade_level())
     user1.subjects_choosen()
-    # don't print user1.subjects_chosen. When you do, you are getting None.
     
 if __name__ == "__main__":
     main()
