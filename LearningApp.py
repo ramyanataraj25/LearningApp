@@ -37,8 +37,10 @@ def math_choosen(self):
         print(f"You scored: {mathUser.score()}% in {attempts} attempts." + 
               f"You answered {user_answers} and the " + 
               f"correct answers were {mathUser.answers}.")
+        return [correct_answers, user_answers]
     else:
         print(f"You scored: {mathUser.score()}% in {attempts} attempts.")
+        return [correct_answers, user_answers]
 
 def vocab_choosen(self):
     """ If the user chooses to work on vocab, this method is called and uses
