@@ -11,7 +11,7 @@ def math_choosen(self):
         list: list of the correct answers and the user's answers
     
     Side effects:
-        prints each math question for the grade choosen, prints thh final score,
+        prints each math question for the grade choosen, prints the final score,
         and stores user's answers as input
     """
     count = input("How many questions would you like to get?: ")
@@ -27,20 +27,23 @@ def math_choosen(self):
     for attempt in range(3):
         mathUser.math_questions()
         user_answers.append(mathUser.user_ans)
-        if user_answers == correct_answers:
+        
+        if mathUser.score() == 100.0:
+            attempts = attempts_taken(attempt)
+            print("All Correct!")
             break
         else:
             attempts = attempts_taken(attempt)
             print("Try Again")
 
     if mathUser.score() < 100.0:
-        print(f"You scored: {mathUser.score()}% in {attempts} attempts." + 
+        print(f"You scored: {mathUser.score()}% in {attempts} attempt(s)." + 
               f"You answered {user_answers} and the " + 
               f"correct answers were {mathUser.answers}.")
-        return [correct_answers, user_answers]
     else:
-        print(f"You scored: {mathUser.score()}% in {attempts} attempts.")
-        return [correct_answers, user_answers]
+        print(f"You scored: {mathUser.score()}% in {attempts} attempt(s).")
+    
+    return [correct_answers, user_answers]
 
 def vocab_choosen(self):
     """ If the user chooses to work on vocab, this method is called and uses
@@ -101,11 +104,10 @@ def attempts_taken(attempt):
         attempt (int): one attempt that is added to the total each time a 
         question is tried again
         
-    
     Returns:
         int: total count of attempts taken
     """
-    total_attempts = 0
+    total_attempts = 1
     total_attempts += attempt
     
     return total_attempts
