@@ -4,7 +4,8 @@ from learning_app_vocab import Vocab
 
 def math_choosen(self):
     """ If the user chooses to work on math, this method is called and uses
-    the Math class to instantiate a user, and generate math questions.
+    the Math class to instantiate a user, and generate math questions. The user
+    will get 3 attempts on each question.
     
     Returns:
         list: list of the correct answers and the user's answers
@@ -20,20 +21,24 @@ def math_choosen(self):
     print(mathUser.questions)
     
     attempts = 0
+    correct_answers = mathUser.answers
+    user_answers = []
     
     for attempt in range(3):
-        question = mathUser.math_questions()
-        attempts = attempts_taken(attempt)
-        if question != mathUser.answers and attempt < 2:
-            print("Try Again")
-        else:
+        mathUser.math_questions()
+        user_answers.append(mathUser.user_ans)
+        if user_answers == correct_answers:
             break
+        else:
+            attempts = attempts_taken(attempt)
+            print("Try Again")
 
     if mathUser.score() < 100.0:
         print(f"You scored: {mathUser.score()}% in {attempts} attempts." + 
-              f"The correct answers were {mathUser.answers}")
+              f"You answered {user_answers} and the " + 
+              f"correct answers were {mathUser.answers}.")
     else:
-         print(f"You scored: {mathUser.score()}% in {attempts} attempts.")
+        print(f"You scored: {mathUser.score()}% in {attempts} attempts.")
 
 def vocab_choosen(self):
     """ If the user chooses to work on vocab, this method is called and uses
@@ -87,9 +92,21 @@ def checkAnswer(answers, userAnswers):
         return f"You got {userCorrectAs}/3 correct!"
 
 def attempts_taken(attempt):
-    attempts = 1
-    attempts += attempt
-    return attempts
+    """ Calculates the number of attempts out of 3 the user takes to get the 
+    questions correct or incorrect.
+    
+    Args:
+        attempt (int): one attempt that is added to the total each time a 
+        question is tried again
+        
+    
+    Returns:
+        int: total count of attempts taken
+    """
+    total_attempts = 0
+    total_attempts += attempt
+    
+    return total_attempts
 
 class User:
     """ LearningApp created for students in kindergarten to second grade, to 
@@ -117,7 +134,7 @@ class User:
                            " Options are Kindergarten through 2nd grade.: ")
         self.subjects = input(f"Hi {self.name}, you are doing questions in " +
                     f"{self.grade}. What subjects do you want to improve in?" +
-                        " Options are Math, Vocab, Grammar: ")
+                        "\nOptions are Math, Vocab, Grammar: ")
         self.subjects = self.subjects.lower()
 
     def grade_level(self):
@@ -133,13 +150,13 @@ class User:
             expression
         """
         
-        regex = r"([Kk]|K\w+|[1]|1\w+|F\w+|[2]|2\w+|S\w+)$"
+        regex = r"([kK]|K\w+|[1]|1\w+|F\w+|[2]|2\w+|S\w+)$"
         match = re.search(regex, self.grade)
         
         if match:
             grade_given = match.group(0)
         
-            if grade_given in ["K", "Kindergarten"]:
+            if grade_given in ["K", "k", "Kindergarten"]:
                 self.grade = "K"
             elif grade_given in ["1", "1st", "First"]:
                 self.grade = "1"
