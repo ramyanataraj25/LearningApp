@@ -43,7 +43,7 @@ def math_choosen(self):
     else:
         print(f"You scored: {mathUser.score()}% in {attempts} attempt(s).")
     
-    return [correct_answers, user_answers]
+    return [correct_answers, user_answers, attempts]
 
 def vocab_choosen(self):
     """ If the user chooses to work on vocab, this method is called and uses
@@ -175,11 +175,15 @@ class User:
         calls methods to provide the user questions
         
         Returns:
-            str: the result of the checkAnswer() method; the information on how
-            the user did on the questions
+            str: the result of the checkAnswer(); the information on how the 
+            user did on the questions
+            
+            list: result of math_choosen() method, a list of 
+            the answers given, the correct answers, and the last attempt
         """
         if self.subjects == "math":
             result = math_choosen(self)
+            return result
         elif self.subjects == "vocab":
             for round in range(3):
                 result = vocab_choosen(self)
@@ -192,7 +196,8 @@ class User:
 def main():
     user1 = User()
     print(user1.grade_level())
-    user1.subjects_choosen()
+    result = user1.subjects_choosen()
+    print(result)
     
 if __name__ == "__main__":
     main()
