@@ -1,6 +1,7 @@
 import re
 from Math import MathQ
 from learning_app_vocab import Vocab
+from learning_app_grammar import Grammar
 
 def math_choosen(self):
     """ If the user chooses to work on math, this method is called and uses
@@ -66,15 +67,37 @@ def vocab_choosen(self):
 
     vocabUser = Vocab(userGrade)
     user_answers = []
+    correct_answers = []
+    attempts = 0
+    
+    
+    for round in range(3):
+        vocabGenerate = vocabUser.vocab_generator()
+        vocabQs = vocabGenerate.split("&")[0]
+        correct_answer = vocabGenerate.split("&")[1]
+        print(vocabQs)
+        userAnswer = input("\nWhat is the answer?: ")
+        attempts = attempts_taken(round)
+        user_answers.append(userAnswer)
+        correct_answers.append(correct_answer)
+    
+    return [correct_answers, user_answers, attempts]
 
-    vocabGenerate = vocabUser.vocab_generator()
-    #vocabQs = vocabGenerate.split("&")[0]
-    correct_answers = vocabGenerate.split("&")[1]
-    #print(vocabQs)
-    #print(vocabGenerate)
-    userAnswer = input("\nWhat is the answer?: ")
-    user_answers.append(userAnswer)
-    return [correct_answers, user_answers]
+def grammar_choosen(self):
+    grammar_user = Grammar(self.name, self.grade)
+    for _ in range(3):
+        user_sentence = input("\nEnter a sentence here:")
+        error_count = grammar_user.error_count(user_sentence)
+
+        if error_count ==0:
+            print("\nGreat job! No errors found.")
+        else:
+            print("\nIssues found in the sentence:") 
+        for error in grammar_user.errors:
+            print(f"{error}")
+    print("\nKeep Practicing!")
+    return [grammar_user.errors, error_count]
+    
 
 def checkAnswer(answers, userAnswers):
     """ Checks answers given by the user with the correct answers. Counts how
@@ -185,12 +208,12 @@ class User:
             result = math_choosen(self)
             return result
         elif self.subjects == "vocab":
-            for round in range(3):
-                result = vocab_choosen(self)
-                correct = checkAnswer(result[0], result[1])
+            result = vocab_choosen(self)
+            correct = checkAnswer(result[0], result[1][2])
             return correct
-       # elif self.subjects == "Grammar":
-            # print_gquestions(self)
+        elif self.subjects == "Grammar":
+            result = grammar_choosen(self)
+            return result
 
             
 def main():
