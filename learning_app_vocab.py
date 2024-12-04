@@ -20,6 +20,7 @@ class Vocab:
         """
         self.grade = grade
         self.questions = []
+        self.possible_answers = []
         self.answers = []
         
     def vocab_generator(self):
@@ -58,6 +59,7 @@ class Vocab:
                 if kindergarten_vocab[possible_answer] == question_informal:
                     answer = possible_answer
             self.questions.append(question_formal)
+            self.possible_answers.append(possible_answers)
             self.answers.append(answer)
             
         elif self.grade == "first_grade":
@@ -69,6 +71,7 @@ class Vocab:
                 if first_grade_vocab[possible_answer] == question_informal:
                     answer = possible_answer
             self.questions.append(question_formal)
+            self.possible_answers.append(possible_answers)
             self.answers.append(answer)
             
         elif self.grade == "second_grade":
@@ -80,9 +83,10 @@ class Vocab:
                 if second_grade_vocab[possible_answer] == question_informal:
                     answer = possible_answer
             self.questions.append(question_formal)
+            self.possible_answers.append(possible_answers)
             self.answers.append(answer)
             
-        return f"{self.questions} & {self.answers}"
+        return f"{self.questions}\n{self.possible_answers}"
     
 vocab = Vocab("kindergarten")
 print(vocab.vocab_generator())
