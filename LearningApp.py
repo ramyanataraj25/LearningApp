@@ -15,8 +15,15 @@ def math_choosen(self):
         prints each math question for the grade choosen, prints the final score,
         and stores user's answers as input
     """
-    count = input("How many questions would you like to get?: ")
-    count = int(count)
+    count = input("How many questions would you like to get? " +
+                  "(Default number of questions is 10, " + 
+                  "type def if you want that value): ")
+    
+    if count == "def":
+        count = 10
+    else:
+        count = int(count)
+    
     mathUser = MathQ(self.grade,count)
     mathUser.get_questions()
     print(mathUser.questions)
@@ -63,25 +70,25 @@ def vocab_choosen(self):
     elif self.grade == "1":
         userGrade = "first_grade"
     elif self.grade == "2":
-        userGrade = "second_grade"    
-
-    vocabUser = Vocab(userGrade)
-    user_answers = []
-    correct_answers = []
+        userGrade = "second_grade"  
+        
     attempts = 0
+    correctAnswers = []
+    incorrectAnswers = []
+    vocab = Vocab(userGrade)
     
+    for attempt in range(3):
+        attempts = attempts_taken(attempt)
+        vocab.vocab_generator()
+        # print(vocab.answers)
+        # print(vocab.question())
+        correctAnswers.append(vocab.correct_answers()) 
+        incorrectAnswers.append(vocab.incorrect_answers())
+        
+    answersResult = [([f"Correct: {correctAnswers}"],
+                        [f"Incorrect: {incorrectAnswers}"])]
     
-    for round in range(3):
-        vocabGenerate = vocabUser.vocab_generator()
-        vocabQs = vocabGenerate.split("&")[0]
-        correct_answer = vocabGenerate.split("&")[1]
-        print(vocabQs)
-        userAnswer = input("\nWhat is the answer?: ")
-        attempts = attempts_taken(round)
-        user_answers.append(userAnswer)
-        correct_answers.append(correct_answer)
-    
-    return [correct_answers, user_answers, attempts]
+    return [vocab.answers, answersResult, attempts]
 
 def grammar_choosen(self):
     grammar_user = Grammar(self.name, self.grade)
@@ -97,27 +104,6 @@ def grammar_choosen(self):
             print(f"{error}")
     print("\nKeep Practicing!")
     return [grammar_user.errors, error_count]
-    
-
-def checkAnswer(answers, userAnswers):
-    """ Checks answers given by the user with the correct answers. Counts how
-    many answers were correct, and returns count
-    
-    Args:
-        answers (str): the correct answers pertaining to the questions given to 
-        the user
-        userAnswers (list): the answers given by the user
-    
-    Returns:
-        str: provides the user information on their results; 
-        how many questions are correct from the three rounds.
-    
-    """
-    userCorrectAs = 0
-    for word in userAnswers:
-        if word in answers:
-            userCorrectAs += 1
-        return f"You got {userCorrectAs}/3 correct!"
 
 def attempts_taken(attempt):
     """ Calculates the number of attempts out of 3 the user takes to get the 
@@ -198,9 +184,6 @@ class User:
         calls methods to provide the user questions
         
         Returns:
-            str: the result of the checkAnswer(); the information on how the 
-            user did on the questions
-            
             list: result of math_choosen() method, a list of 
             the answers given, the correct answers, and the last attempt
         """
@@ -209,8 +192,7 @@ class User:
             return result
         elif self.subjects == "vocab":
             result = vocab_choosen(self)
-            correct = checkAnswer(result[0], result[1][2])
-            return correct
+            return result
         elif self.subjects == "Grammar":
             result = grammar_choosen(self)
             return result
