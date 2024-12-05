@@ -85,8 +85,11 @@ class Vocab:
             self.questions.append(question_formal)
             self.possible_answers.append(possible_answers)
             self.answers.append(answer)
-            
-        return f"{self.questions}\n{self.possible_answers}"
     
-vocab = Vocab("kindergarten")
-print(vocab.vocab_generator())
+def main():
+    vocab = Vocab("kindergarten")
+    vocab.vocab_generator()
+    print(vocab.answers)
+
+if __name__ == "__main__":
+    main()
