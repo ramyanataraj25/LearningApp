@@ -92,11 +92,17 @@ class Vocab:
             self.user_input.append(input(f"{question}: {possible_answers}"))
 
     def user_answers(self):
-        correct = []
-        incorrect = []
+        self.correct = []
+        self.incorrect = []
         for user_answer, correct_answer in zip(self.user_input, self.answers):
-                correct.append(user_answer) if user_answer == correct_answer else incorrect.append(user_answer)
-        return correct, incorrect
+                self.correct.append(user_answer) if user_answer == correct_answer else self.incorrect.append(user_answer)
+        return self.correct, self.incorrect
+
+    def user_score(self):
+        correct_user_answers = max(self.correct, key = len)
+        total_questions_answered = max(self.user_input, key = len)
+        final_score = f"{len(correct_user_answers)} / {len(total_questions_answered)}"
+        return final_score
 
 def main():
     vocab = Vocab("kindergarten")
