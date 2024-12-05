@@ -99,11 +99,11 @@ class Vocab:
         return self.correct, self.incorrect
 
     def user_score(self):
-        if not self.correct:
-            return f"0 / {len(self.user_input)}"
-        
-        correct_user_answers = len(self.correct)
+        correct_answers = set(self.correct)
+        user_input_answers = set(self.user_input)
+        incorrect_answers = len(user_input_answers.difference(correct_answers))
         total_questions_answered = len(self.user_input)
+        correct_user_answers = total_questions_answered - incorrect_answers
         final_score = f"{correct_user_answers} / {total_questions_answered}"
         return final_score
 
