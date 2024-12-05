@@ -135,8 +135,8 @@ def main():
     vocab.vocab_generator()
     print(vocab.answers)
     print(vocab.question())
-    print(vocab.correct_answers())
-    print(vocab.incorrect_answers())
+    print(vocab.user_answers())
+    print(vocab.user_score())
 
 if __name__ == "__main__":
     main()
