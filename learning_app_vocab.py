@@ -6,6 +6,7 @@ class Vocab:
     Attributes:
         grade (str): student's grade level
         questions (list): list of vocab questions
+        possible answers (list): list of the possible answers to the question
         answers (list): list of vocab answers
         user input (list): list of the user's input
         correct (list): list of the correct answers
