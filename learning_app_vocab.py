@@ -91,19 +91,12 @@ class Vocab:
         for question, possible_answers in zip(self.questions, self.possible_answers): 
             self.user_input.append(input(f"{question}: {possible_answers}"))
 
-    def correct_answers(self):
+    def user_answers(self):
         correct = []
-        for user_answer, correct_answer in zip(self.user_input, self.answers):
-            if user_answer == correct_answer:
-                correct.append(user_answer)
-        return correct
-    
-    def incorrect_answers(self):
         incorrect = []
         for user_answer, correct_answer in zip(self.user_input, self.answers):
-            if user_answer != correct_answer:
-                incorrect.append(user_answer)
-        return incorrect
+                correct.append(user_answer) if user_answer == correct_answer else incorrect.append(user_answer)
+        return correct, incorrect
 
 def main():
     vocab = Vocab("kindergarten")
