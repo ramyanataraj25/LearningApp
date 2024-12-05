@@ -86,10 +86,32 @@ class Vocab:
             self.possible_answers.append(possible_answers)
             self.answers.append(answer)
     
+    def question(self):
+        self.user_input = []
+        for question, possible_answers in zip(self.questions, self.possible_answers): 
+            self.user_input.append(input(f"{question}: {possible_answers}"))
+
+    def correct_answers(self):
+        correct = []
+        for user_answer, correct_answer in zip(self.user_input, self.answers):
+            if user_answer == correct_answer:
+                correct.append(user_answer)
+        return correct
+    
+    def incorrect_answers(self):
+        incorrect = []
+        for user_answer, correct_answer in zip(self.user_input, self.answers):
+            if user_answer != correct_answer:
+                incorrect.append(user_answer)
+        return incorrect
+
 def main():
     vocab = Vocab("kindergarten")
     vocab.vocab_generator()
     print(vocab.answers)
+    print(vocab.question())
+    print(vocab.correct_answers())
+    print(vocab.incorrect_answers())
 
 if __name__ == "__main__":
     main()
