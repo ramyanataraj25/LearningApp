@@ -103,17 +103,18 @@ class MathQ:
             The percentage of correct answers
         """
         num_correct = 0
+        a_pos = 0
         for a in self.user_ans:
-            for correct_a in self.answers:
-                if str(a) == str(correct_a):
-                    num_correct = num_correct + 1
+            if str(a) == str(self.answers[a_pos]):
+                num_correct = num_correct + 1
+            a_pos = a_pos + 1
         percent_correct = num_correct / len(self.questions)
         return percent_correct * 100
         
 
 
 def main():
-    q = MathQ("1", 7)
+    q = MathQ("K", 5)
     q.get_questions()
     print(q.questions)
     print(q.answers)
