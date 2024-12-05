@@ -7,6 +7,9 @@ class Vocab:
         grade (str): student's grade level
         questions (list): list of vocab questions
         answers (list): list of vocab answers
+        user input (list): list of the user's input
+        correct (list): list of the correct answers
+        incorrect (list): list of the incorrect answers
     """
     
     def __init__(self, grade):
@@ -22,12 +25,15 @@ class Vocab:
         self.questions = []
         self.possible_answers = []
         self.answers = []
+        self.user_input = []
+        self.correct = []
+        self.incorrect = []
         
     def vocab_generator(self):
-        """Generates vocab questions and the answers that go along with them.
+        """Generates vocab questions and the possible answers for the questions.
         
         Side effects:
-            appends the responses to questions and answers
+            appends the questions, possible answers, and answers to lists
         """
         kindergarten_vocab = {"chore"     :"a routine task, especially a household one",
                               "invitation":"a written or verbal request inviting someone to go somewhere or to do something",
@@ -87,18 +93,35 @@ class Vocab:
             self.answers.append(answer)
     
     def question(self):
-        self.user_input = []
+        """Gathers the user's input for the questions.
+        
+        Side effects:
+            allows the user to externally interact with the question
+        """
         for question, possible_answers in zip(self.questions, self.possible_answers): 
             self.user_input.append(input(f"{question}: {possible_answers}"))
 
     def user_answers(self):
-        self.correct = []
-        self.incorrect = []
+        """Sorts the user's answers into a list of correct answers and a list of 
+        incorrect answers.
+        
+        Returns:
+            a list of correct answers and a list of incorrect answers
+            
+        Side effects:
+            appends the correct and incorrect answers into respective lists
+        """
         for user_answer, correct_answer in zip(self.user_input, self.answers):
                 self.correct.append(user_answer) if user_answer == correct_answer else self.incorrect.append(user_answer)
         return self.correct, self.incorrect
 
     def user_score(self):
+        """Calculates the user's final score based on the questions they got 
+        corret and incorrect.
+        
+        Returns:
+            the user's final score
+        """
         correct_answers = set(self.correct)
         user_input_answers = set(self.user_input)
         incorrect_answers = len(user_input_answers.difference(correct_answers))
