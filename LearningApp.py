@@ -58,7 +58,8 @@ def vocab_choosen(self):
     the Vocab class to instantiate a user, and generate vocab questions.
     
     Returns:
-        list: list of the correct answers and the user's answers
+        list: list of the correct answers and the user's answers, the 
+        number of attempts they took, and score they got
         
     Side effects:
         prints each vocab question for the grade choosen, and stores user's
@@ -90,6 +91,18 @@ def vocab_choosen(self):
     return [vocab.answers, answersResult[-1], attempts, score]
 
 def grammar_choosen(self):
+    """ If a user chooses to work on grammar, it will create an instance of the
+    Grammar class, and run various methods to teach the user how to 
+    grammatically write sentences.
+    
+    Returns:
+        list: the errors the user made when they wrote their sentence and the 
+        number of errors
+        
+    Side Effects:
+        prompts the user for questions, and stores the answer as input. Uses the
+        input to validate if they made grammar errors and explain the issues
+    """
     grammar_user = Grammar(self.name, self.grade)
     
     for _ in range(3):
@@ -111,7 +124,7 @@ def attempts_taken(attempt):
     
     Args:
         attempt (int): one attempt that is added to the total each time a 
-        question is tried again
+        question is tried again or another question is generated
         
     Returns:
         int: total count of attempts taken
@@ -141,6 +154,10 @@ class User:
             grade (str): grade level the student is in (either K, 1st, or 2nd)
             subjects (list): list of subjects the student wants to improve in
                 can be 1 to all subjects
+                
+        Side Effects:
+            Attributes of self, name, grade and subjects, are being set to 
+            various values provided by the user
         """
         self.name = input("What is your name? ")
         self.grade = input(f"Hi {self.name}, what grade are you learning in?" + 
@@ -199,6 +216,14 @@ class User:
 
             
 def main():
+    """ This is the main method, that creates an instance of the User class, and
+    prompts for name, grade_levels, and subjects, leading to one of the other 
+    subject methods to be run.
+    
+    Side Effect:
+        Prompts the user for inputs to the beginning questions and stores input
+        and prints the result of each subject method when run
+    """
     user1 = User()
     print(user1.grade_level())
     result = user1.subjects_choosen()
