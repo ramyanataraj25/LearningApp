@@ -100,7 +100,7 @@ class Vocab:
             allows the user to externally interact with the question
         """
         for question, possible_answers in zip(self.questions, self.possible_answers): 
-            self.user_input.append(input(f"{question}: {possible_answers}"))
+            self.user_input.append(input(f"{question}: {possible_answers} "))
 
     def user_answers(self):
         """Sorts the user's answers into a list of correct answers and a list of 
