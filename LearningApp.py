@@ -78,13 +78,14 @@ def vocab_choosen(self):
     vocab = Vocab(userGrade)
     
     
-    for attempt in range(2):
+    for attempt in range(3):
         vocab.vocab_generator()
         vocab.question()
         score = vocab.user_score()
         attempts = attempts_taken(attempt)
         
         answersResult.append(vocab.user_answers())
+        vocab.questions.clear()
     
     return [vocab.answers, answersResult[-1], attempts, score]
 
