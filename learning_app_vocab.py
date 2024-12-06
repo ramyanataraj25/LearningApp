@@ -58,7 +58,7 @@ class Vocab:
         }
         
         if self.grade == "kindergarten":
-            question_informal = random.choice(list(kindergarten_vocab.values()))
+            question_informal = random.sample(list(kindergarten_vocab.values()), 1)
             question_formal = f"What word correctly matches this definition: {question_informal}"
             possible_answers = (list(kindergarten_vocab.keys()))
             answer = None
@@ -70,7 +70,7 @@ class Vocab:
             self.answers.append(answer)
             
         elif self.grade == "first_grade":
-            question_informal = random.choice(list(first_grade_vocab.values()))
+            question_informal = random.sample(list(first_grade_vocab.values()), 1)
             question_formal = f"What word correctly matches this definition: {question_informal}"
             possible_answers = (list(first_grade_vocab.keys()))
             answer = None
@@ -82,7 +82,7 @@ class Vocab:
             self.answers.append(answer)
             
         elif self.grade == "second_grade":
-            question_informal = random.choice(list(second_grade_vocab.values()))
+            question_informal = random.sample(list(second_grade_vocab.values()), 1)
             question_formal = f"What word correctly matches this definition: {question_informal}"
             possible_answers = (list(second_grade_vocab.keys()))
             answer = None
