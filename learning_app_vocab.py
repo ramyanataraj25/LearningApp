@@ -118,7 +118,7 @@ class Vocab:
 
     def user_score(self):
         """Calculates the user's final score based on the questions they got 
-        correct and incorrect.
+        correct, incorrect, and the total questions they answered.
         
         Returns:
             the user's final score
