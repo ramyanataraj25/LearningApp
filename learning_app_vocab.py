@@ -35,9 +35,9 @@ class Vocab:
         """Generates vocab questions and the possible answers for the questions.
         
         Side effects:
-            appends the questions, possible answers, and answers to lists
-            
             opens and reads to a file
+            
+            appends the questions, possible answers, and answers to lists
         """
         
         with open("vocab.json", "r", encoding = "UTF-8") as f:
@@ -120,7 +120,7 @@ class Vocab:
 
     def user_score(self):
         """Calculates the user's final score based on the questions they got 
-        correct, incorrect, and the total questions they answered.
+        correct and the total questions they answered.
         
         Returns:
             the user's final score
