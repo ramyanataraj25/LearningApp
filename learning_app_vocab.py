@@ -1,3 +1,4 @@
+import json
 import random
 
 class Vocab:
@@ -35,27 +36,15 @@ class Vocab:
         
         Side effects:
             appends the questions, possible answers, and answers to lists
+            
+            opens and reads to a file
         """
-        kindergarten_vocab = {"chore"     :"a routine task, especially a household one",
-                              "invitation":"a written or verbal request inviting someone to go somewhere or to do something",
-                              "polite"    :"having or showing behavior that is respectful and considerate of other people",
-                              "rotten"    :"suffering from decay",
-                              "wiggle"    :"move or cause to move up and down from side to side with small rapid movemements"
-        }
         
-        first_grade_vocab = {"affordable":"inexpensive: reasonably priced",
-                             "caution"   :"care taken to avoid danger or mistakes",
-                             "drowsy"    :"sleepy and lethargic; half asleep",
-                             "flee"      :"run away from a place or situation of danger",
-                             "scold"     :"remonstrate with or rebuke (someone) angrily"
-        }
-        
-        second_grade_vocab = {"career"  :"an occuption undertaken for a significant period of a person's life and opportunities for progress",
-                              "discard" :"get rid of (someone or something) as no longer useful or desirable",
-                              "frighten":"make (someone) afraid or anxious",
-                              "luxury"  :"the state of great comfort and extravagant living",
-                              "tremble" :"(of a person or part of the body) shake involuntarily, typically as a result of anxiety, excitement, or frailty"
-        }
+        with open("vocab.json", "r", encoding = "UTF-8") as f:
+            all_vocab = json.load(f)
+            kindergarten_vocab = all_vocab["kindergarten_vocab"]
+            first_grade_vocab = all_vocab["first_grade_vocab"]
+            second_grade_vocab = all_vocab["second_grade_vocab"]
         
         if self.grade == "kindergarten":
             all_questions = list(kindergarten_vocab.values())
@@ -124,8 +113,9 @@ class Vocab:
         Side effects:
             appends the correct and incorrect answers into respective lists
         """
-        for user_answer, correct_answer in zip(self.user_input, self.answers):
-                self.correct.append(user_answer) if user_answer == correct_answer else self.incorrect.append(user_answer)
+        user_answer = self.user_input[-1]
+        correct_answer = self.answers[-1]
+        self.correct.append(user_answer) if user_answer == correct_answer else self.incorrect.append(user_answer)
         return self.correct, self.incorrect
 
     def user_score(self):
@@ -135,11 +125,8 @@ class Vocab:
         Returns:
             the user's final score
         """
-        correct_answers = set(self.correct)
-        user_input_answers = set(self.user_input)
-        incorrect_answers = len(user_input_answers.difference(correct_answers))
+        correct_user_answers = len(self.correct)
         total_questions_answered = len(self.user_input)
-        correct_user_answers = total_questions_answered - incorrect_answers
         final_score = f"{correct_user_answers} / {total_questions_answered}"
         return final_score
 
