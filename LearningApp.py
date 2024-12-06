@@ -73,25 +73,24 @@ def vocab_choosen(self):
         userGrade = "second_grade"  
         
     attempts = 0
-    correctAnswers = []
-    incorrectAnswers = []
+    answersResult = []
+    score = 0
     vocab = Vocab(userGrade)
     
-    for attempt in range(3):
-        attempts = attempts_taken(attempt)
-        vocab.vocab_generator()
-        # print(vocab.answers)
-        # print(vocab.question())
-        correctAnswers.append(vocab.correct_answers()) 
-        incorrectAnswers.append(vocab.incorrect_answers())
-        
-    answersResult = [([f"Correct: {correctAnswers}"],
-                        [f"Incorrect: {incorrectAnswers}"])]
     
-    return [vocab.answers, answersResult, attempts]
+    for attempt in range(2):
+        vocab.vocab_generator()
+        vocab.question()
+        score = vocab.user_score()
+        attempts = attempts_taken(attempt)
+        
+        answersResult.append(vocab.user_answers())
+    
+    return [vocab.answers, answersResult[-1], attempts, score]
 
 def grammar_choosen(self):
     grammar_user = Grammar(self.name, self.grade)
+    
     for _ in range(3):
         user_sentence = input("\nEnter a sentence here:")
         error_count = grammar_user.error_count(user_sentence)
