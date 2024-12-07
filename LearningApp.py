@@ -103,6 +103,7 @@ def grammar_choosen(self):
         input to validate if they made grammar errors and explain the issues
     """
     grammar_user = Grammar(self.name, self.grade)
+    errors_made = []
     
     for _ in range(3):
         sentence = input("Enter a sentence: ")
@@ -114,10 +115,9 @@ def grammar_choosen(self):
             print("\nIssues found in the sentence:") 
             for error in grammar_user.errors:
                 print(f"{error}")
+                errors_made.append(grammar_user.errors)
 
         print("\nKeep praciticing!")
-        
-    errors_made = grammar_user.errors
 
     return [errors_made, error_number]
 
@@ -213,7 +213,7 @@ class User:
         elif self.subjects == "vocab":
             result = vocab_choosen(self)
             return result
-        elif self.subjects == "Grammar":
+        elif self.subjects == "grammar":
             result = grammar_choosen(self)
             return result
 
