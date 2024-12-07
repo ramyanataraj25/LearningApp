@@ -6,6 +6,7 @@ class Vocab:
     
     Attributes:
         grade (str): student's grade level
+        used questions (set): set that stores the used questions
         questions (list): list of vocab questions
         possible answers (list): list of the possible answers to the question
         answers (list): list of vocab answers
@@ -24,6 +25,7 @@ class Vocab:
             sets attributes
         """
         self.grade = grade
+        self.used_questions = set()
         self.questions = []
         self.possible_answers = []
         self.answers = []
@@ -49,6 +51,7 @@ class Vocab:
         if self.grade == "kindergarten":
             all_questions = list(kindergarten_vocab.values())
             random.shuffle(all_questions)
+            all_questions = [q for q in all_questions if q not in self.used_questions]
             if all_questions:
                 question_informal = all_questions.pop()
                 question_formal = f"What word correctly matches this definition: {question_informal}"
@@ -57,14 +60,15 @@ class Vocab:
                 for possible_answer in possible_answers:
                     if kindergarten_vocab[possible_answer] == question_informal:
                         answer = possible_answer
+                self.used_questions.add(question_informal)
                 self.questions.append(question_formal)
                 self.possible_answers.append(possible_answers)
                 self.answers.append(answer)
-                kindergarten_vocab.pop(answer, None)
             
         elif self.grade == "first_grade":
             all_questions = list(first_grade_vocab.values())
             random.shuffle(all_questions)
+            all_questions = [q for q in all_questions if q not in self.used_questions]
             if all_questions:
                 question_informal = all_questions.pop()
                 question_formal = f"What word correctly matches this definition: {question_informal}"
@@ -73,14 +77,15 @@ class Vocab:
                 for possible_answer in possible_answers:
                     if first_grade_vocab[possible_answer] == question_informal:
                         answer = possible_answer
+                self.used_questions.add(question_informal)
                 self.questions.append(question_formal)
                 self.possible_answers.append(possible_answers)
                 self.answers.append(answer)
-                first_grade_vocab.pop(answer, None)
             
         elif self.grade == "second_grade":
             all_questions = list(second_grade_vocab.values())
             random.shuffle(all_questions)
+            all_questions = [q for q in all_questions if q not in self.used_questions]
             if all_questions:
                 question_informal = all_questions.pop()
                 question_formal = f"What word correctly matches this definition: {question_informal}"
@@ -89,10 +94,10 @@ class Vocab:
                 for possible_answer in possible_answers:
                     if second_grade_vocab[possible_answer] == question_informal:
                         answer = possible_answer
+                self.used_questions.add(question_informal)
                 self.questions.append(question_formal)
                 self.possible_answers.append(possible_answers)
                 self.answers.append(answer)
-                second_grade_vocab.pop(answer, None)
     
     def question(self):
         """Gathers the user's input for the questions.
