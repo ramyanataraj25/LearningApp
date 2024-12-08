@@ -1,0 +1,22 @@
+        {
+        "kindergarten_vocab" : {"chore"     :"a routine task, especially a household one",
+                                "invitation":"a written or verbal request inviting someone to go somewhere or to do something",
+                                "polite"    :"having or showing behavior that is respectful and considerate of other people",
+                                "rotten"    :"suffering from decay",
+                                "wiggle"    :"move or cause to move up and down from side to side with small rapid movemements"
+        },
+        
+        "first_grade_vocab" : {"affordable":"inexpensive: reasonably priced",
+                                "caution"   :"care taken to avoid danger or mistakes",
+                                "drowsy"    :"sleepy and lethargic; half asleep",
+                                "flee"      :"run away from a place or situation of danger",
+                                "scold"     :"remonstrate with or rebuke (someone) angrily"
+        },
+        
+        "second_grade_vocab" : {"career"  :"an occuption undertaken for a significant period of a person's life and opportunities for progress",
+                                "discard" :"get rid of (someone or something) as no longer useful or desirable",
+                                "frighten":"make (someone) afraid or anxious",
+                                "luxury"  :"the state of great comfort and extravagant living",
+                                "tremble" :"(of a person or part of the body) shake involuntarily, typically as a result of anxiety, excitement, or frailty"
+        }
+        }

@@ -15,8 +15,15 @@ def math_choosen(self):
         prints each math question for the grade choosen, prints the final score,
         and stores user's answers as input
     """
-    count = input("How many questions would you like to get?: ")
-    count = int(count)
+    count = input("How many questions would you like to get? " +
+                  "(Default number of questions is 10, " + 
+                  "type def if you want that value): ")
+    
+    if count == "def":
+        count = 10
+    else:
+        count = int(count)
+    
     mathUser = MathQ(self.grade,count)
     mathUser.get_questions()
     print(mathUser.questions)
@@ -51,7 +58,8 @@ def vocab_choosen(self):
     the Vocab class to instantiate a user, and generate vocab questions.
     
     Returns:
-        list: list of the correct answers and the user's answers
+        list: list of the correct answers and the user's answers, the 
+        number of attempts they took, and score they got
         
     Side effects:
         prints each vocab question for the grade choosen, and stores user's
@@ -63,61 +71,56 @@ def vocab_choosen(self):
     elif self.grade == "1":
         userGrade = "first_grade"
     elif self.grade == "2":
-        userGrade = "second_grade"    
-
-    vocabUser = Vocab(userGrade)
-    user_answers = []
-    correct_answers = []
+        userGrade = "second_grade"  
+        
     attempts = 0
+    answersResult = []
+    score = 0
+    vocab = Vocab(userGrade)
     
     
-    for round in range(3):
-        vocabGenerate = vocabUser.vocab_generator()
-        vocabQs = vocabGenerate.split("&")[0]
-        correct_answer = vocabGenerate.split("&")[1]
-        print(vocabQs)
-        userAnswer = input("\nWhat is the answer?: ")
-        attempts = attempts_taken(round)
-        user_answers.append(userAnswer)
-        correct_answers.append(correct_answer)
+    for attempt in range(3):
+        vocab.vocab_generator()
+        vocab.question()
+        answersResult.append(vocab.user_answers())
+        score = vocab.user_score()
+        attempts = attempts_taken(attempt)
+        vocab.questions.clear()
     
-    return [correct_answers, user_answers, attempts]
+    return [vocab.answers, answersResult[-1], attempts, score]
 
 def grammar_choosen(self):
+    """ If a user chooses to work on grammar, it will create an instance of the
+    Grammar class, and run various methods to teach the user how to 
+    grammatically write sentences.
+    
+    Returns:
+        list: the errors the user made when they wrote their sentence and the 
+        number of errors
+        
+    Side Effects:
+        prompts the user for questions, and stores the answer as input. Uses the
+        input to validate if they made grammar errors and explain the issues
+    """
     grammar_user = Grammar(self.name, self.grade)
+    errors_made = []
+    error_ct = 0
+    
     for _ in range(3):
-        user_sentence = input("\nEnter a sentence here:")
-        error_count = grammar_user.error_count(user_sentence)
-
-        if error_count ==0:
+        sentence = input("Enter a sentence: ")
+        error_number = grammar_user.error_count(sentence)
+        if error_number == 0:
             print("\nGreat job! No errors found.")
         else:
             print("\nIssues found in the sentence:") 
-        for error in grammar_user.errors:
-            print(f"{error}")
-    print("\nKeep Practicing!")
-    return [grammar_user.errors, error_count]
-    
+            for error in grammar_user.errors:
+                print(f"{error}")
+                errors_made.append(grammar_user.errors)
+                error_ct += error_number
 
-def checkAnswer(answers, userAnswers):
-    """ Checks answers given by the user with the correct answers. Counts how
-    many answers were correct, and returns count
-    
-    Args:
-        answers (str): the correct answers pertaining to the questions given to 
-        the user
-        userAnswers (list): the answers given by the user
-    
-    Returns:
-        str: provides the user information on their results; 
-        how many questions are correct from the three rounds.
-    
-    """
-    userCorrectAs = 0
-    for word in userAnswers:
-        if word in answers:
-            userCorrectAs += 1
-        return f"You got {userCorrectAs}/3 correct!"
+        print("\nKeep praciticing!")
+
+    return [errors_made, error_ct]
 
 def attempts_taken(attempt):
     """ Calculates the number of attempts out of 3 the user takes to get the 
@@ -125,7 +128,7 @@ def attempts_taken(attempt):
     
     Args:
         attempt (int): one attempt that is added to the total each time a 
-        question is tried again
+        question is tried again or another question is generated
         
     Returns:
         int: total count of attempts taken
@@ -155,6 +158,10 @@ class User:
             grade (str): grade level the student is in (either K, 1st, or 2nd)
             subjects (list): list of subjects the student wants to improve in
                 can be 1 to all subjects
+                
+        Side Effects:
+            Attributes of self, name, grade and subjects, are being set to 
+            various values provided by the user
         """
         self.name = input("What is your name? ")
         self.grade = input(f"Hi {self.name}, what grade are you learning in?" + 
@@ -198,9 +205,6 @@ class User:
         calls methods to provide the user questions
         
         Returns:
-            str: the result of the checkAnswer(); the information on how the 
-            user did on the questions
-            
             list: result of math_choosen() method, a list of 
             the answers given, the correct answers, and the last attempt
         """
@@ -209,14 +213,21 @@ class User:
             return result
         elif self.subjects == "vocab":
             result = vocab_choosen(self)
-            correct = checkAnswer(result[0], result[1][2])
-            return correct
-        elif self.subjects == "Grammar":
+            return result
+        elif self.subjects == "grammar":
             result = grammar_choosen(self)
             return result
 
             
 def main():
+    """ This is the main method, that creates an instance of the User class, and
+    prompts for name, grade_levels, and subjects, leading to one of the other 
+    subject methods to be run.
+    
+    Side Effect:
+        Prompts the user for inputs to the beginning questions and stores input
+        and prints the result of each subject method when run
+    """
     user1 = User()
     print(user1.grade_level())
     result = user1.subjects_choosen()
