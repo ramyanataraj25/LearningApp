@@ -135,13 +135,3 @@ class Vocab:
         final_score = f"{correct_user_answers} / {total_questions_answered}"
         return final_score
 
-def main():
-    vocab = Vocab("kindergarten")
-    vocab.vocab_generator()
-    print(vocab.answers)
-    print(vocab.question())
-    print(vocab.user_answers())
-    print(vocab.user_score())
-
-if __name__ == "__main__":
-    main()

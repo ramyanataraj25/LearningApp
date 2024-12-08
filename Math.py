@@ -111,18 +111,6 @@ class MathQ:
         percent_correct = num_correct / len(self.questions)
         return percent_correct * 100
         
-
-
-def main():
-    q = MathQ("K", 5)
-    q.get_questions()
-    print(q.questions)
-    print(q.answers)
-    q.math_questions()
-    print(q.score())
-    
-if __name__ == "__main__":
-    main()
        
                 
             
