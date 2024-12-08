@@ -104,22 +104,23 @@ def grammar_choosen(self):
     """
     grammar_user = Grammar(self.name, self.grade)
     errors_made = []
+    error_ct = 0
     
     for _ in range(3):
         sentence = input("Enter a sentence: ")
         error_number = grammar_user.error_count(sentence)
-        # print(f"Total errors: {error_number}")
-        if error_number ==0:
+        if error_number == 0:
             print("\nGreat job! No errors found.")
         else:
             print("\nIssues found in the sentence:") 
             for error in grammar_user.errors:
                 print(f"{error}")
                 errors_made.append(grammar_user.errors)
+                error_ct += error_number
 
         print("\nKeep praciticing!")
 
-    return [errors_made, error_number]
+    return [errors_made, error_ct]
 
 def attempts_taken(attempt):
     """ Calculates the number of attempts out of 3 the user takes to get the 
