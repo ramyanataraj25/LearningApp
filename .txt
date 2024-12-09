@@ -1,0 +1,11 @@
+Daniel practiced math at the 1 level.
+Questions Answered: 3
+Number of Attempts: 2
+
+Correct Answers: [144, 148, 9]
+
+Attempt 1 Answers: ['132', '11', '33']
+Attempt 2 Answers: ['144', '148', '9']
+
+
+Final Score: 100.0%

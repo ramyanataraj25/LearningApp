@@ -40,6 +40,9 @@ class Vocab:
             opens and reads to a file
             
             appends the questions, possible answers, and answers to lists
+            
+        Technique credit:
+            Tatyana: taking credit for use of json.load()
         """
         
         with open("vocab.json", "r", encoding = "UTF-8") as f:
@@ -51,10 +54,12 @@ class Vocab:
         if self.grade == "kindergarten":
             all_questions = list(kindergarten_vocab.values())
             random.shuffle(all_questions)
-            all_questions = [q for q in all_questions if q not in self.used_questions]
+            all_questions = [q for q in all_questions if q not in 
+                             self.used_questions]
             if all_questions:
                 question_informal = all_questions.pop()
-                question_formal = f"What word correctly matches this definition: {question_informal}"
+                question_formal = f"What word correctly matches this \
+definition: {question_informal}"
                 possible_answers = (list(kindergarten_vocab.keys()))
                 answer = None
                 for possible_answer in possible_answers:
@@ -68,10 +73,12 @@ class Vocab:
         elif self.grade == "first_grade":
             all_questions = list(first_grade_vocab.values())
             random.shuffle(all_questions)
-            all_questions = [q for q in all_questions if q not in self.used_questions]
+            all_questions = [q for q in all_questions if q not in 
+                             self.used_questions]
             if all_questions:
                 question_informal = all_questions.pop()
-                question_formal = f"What word correctly matches this definition: {question_informal}"
+                question_formal = f"What word correctly matches this \
+definition: {question_informal}"
                 possible_answers = (list(first_grade_vocab.keys()))
                 answer = None
                 for possible_answer in possible_answers:
@@ -85,10 +92,12 @@ class Vocab:
         elif self.grade == "second_grade":
             all_questions = list(second_grade_vocab.values())
             random.shuffle(all_questions)
-            all_questions = [q for q in all_questions if q not in self.used_questions]
+            all_questions = [q for q in all_questions if q not in 
+                             self.used_questions]
             if all_questions:
                 question_informal = all_questions.pop()
-                question_formal = f"What word correctly matches this definition: {question_informal}"
+                question_formal = f"What word correctly matches this \
+definition: {question_informal}"
                 possible_answers = (list(second_grade_vocab.keys()))
                 answer = None
                 for possible_answer in possible_answers:
@@ -105,7 +114,8 @@ class Vocab:
         Side effects:
             allows the user to externally interact with the question
         """
-        for question, possible_answers in zip(self.questions, self.possible_answers): 
+        for question, possible_answers in zip(self.questions, 
+                                              self.possible_answers): 
             self.user_input.append(input(f"{question}: {possible_answers} "))
 
     def user_answers(self):
@@ -113,23 +123,20 @@ class Vocab:
         incorrect answers.
     
         Returns:
-            A tuple of all user answers, correct answers, incorrect answers
+            a list of correct answers and a list of incorrect answers
         
         Side effects:
-            Appends the correct and incorrect answers into respective lists.
+            appends the correct and incorrect answers into respective lists
+            
+        Technique credit:
+            Tatyana: taking credit for conditional expressions
         """
-        self.correct = []  
-        self.incorrect = []  
+        user_answer = self.user_input[-1]
+        correct_answer = self.answers[-1]
+        (self.correct.append(user_answer) if user_answer == correct_answer else 
+         self.incorrect.append(user_answer))
+        return self.correct, self.incorrect
 
-        for user_answer, correct_answer in zip(self.user_input, self.answers):
-            if user_answer == correct_answer:
-                if user_answer not in self.correct:
-                    self.correct.append(user_answer)
-            elif user_answer not in self.incorrect:  
-                self.incorrect.append(user_answer)
-                
-        return [self.user_input, self.correct, self.incorrect]
-    
     def user_score(self):
         """Calculates the user's final score based on the questions they got 
         correct and the total questions they answered.
