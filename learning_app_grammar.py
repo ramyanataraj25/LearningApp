@@ -115,7 +115,7 @@ class Grammar:
 
         return count_errors
     
-student = Grammar("Jess", "K")
-sentence = input("Enter a sentence: ")
-error_number = student.error_count(sentence)
+#student = Grammar("Jess", "K")
+#sentence = input("Enter a sentence: ")
+#error_number = student.error_count(sentence)
 #print(f"Total errors: {error_number}")   
