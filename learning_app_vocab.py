@@ -51,10 +51,12 @@ class Vocab:
         if self.grade == "kindergarten":
             all_questions = list(kindergarten_vocab.values())
             random.shuffle(all_questions)
-            all_questions = [q for q in all_questions if q not in self.used_questions]
+            all_questions = [q for q in all_questions if q not in 
+                             self.used_questions]
             if all_questions:
                 question_informal = all_questions.pop()
-                question_formal = f"What word correctly matches this definition: {question_informal}"
+                question_formal = f"What word correctly matches this \
+definition: {question_informal}"
                 possible_answers = (list(kindergarten_vocab.keys()))
                 answer = None
                 for possible_answer in possible_answers:
@@ -68,10 +70,12 @@ class Vocab:
         elif self.grade == "first_grade":
             all_questions = list(first_grade_vocab.values())
             random.shuffle(all_questions)
-            all_questions = [q for q in all_questions if q not in self.used_questions]
+            all_questions = [q for q in all_questions if q not in 
+                             self.used_questions]
             if all_questions:
                 question_informal = all_questions.pop()
-                question_formal = f"What word correctly matches this definition: {question_informal}"
+                question_formal = f"What word correctly matches this \
+definition: {question_informal}"
                 possible_answers = (list(first_grade_vocab.keys()))
                 answer = None
                 for possible_answer in possible_answers:
@@ -85,10 +89,12 @@ class Vocab:
         elif self.grade == "second_grade":
             all_questions = list(second_grade_vocab.values())
             random.shuffle(all_questions)
-            all_questions = [q for q in all_questions if q not in self.used_questions]
+            all_questions = [q for q in all_questions if q not in 
+                             self.used_questions]
             if all_questions:
                 question_informal = all_questions.pop()
-                question_formal = f"What word correctly matches this definition: {question_informal}"
+                question_formal = f"What word correctly matches this \
+definition: {question_informal}"
                 possible_answers = (list(second_grade_vocab.keys()))
                 answer = None
                 for possible_answer in possible_answers:
@@ -105,7 +111,8 @@ class Vocab:
         Side effects:
             allows the user to externally interact with the question
         """
-        for question, possible_answers in zip(self.questions, self.possible_answers): 
+        for question, possible_answers in zip(self.questions, 
+                                              self.possible_answers): 
             self.user_input.append(input(f"{question}: {possible_answers} "))
 
     def user_answers(self):
@@ -120,7 +127,8 @@ class Vocab:
         """
         user_answer = self.user_input[-1]
         correct_answer = self.answers[-1]
-        self.correct.append(user_answer) if user_answer == correct_answer else self.incorrect.append(user_answer)
+        (self.correct.append(user_answer) if user_answer == correct_answer else 
+         self.incorrect.append(user_answer))
         return self.correct, self.incorrect
 
     def user_score(self):
