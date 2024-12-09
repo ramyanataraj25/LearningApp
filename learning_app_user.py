@@ -2,6 +2,7 @@ import re
 from Math import MathQ
 from learning_app_vocab import Vocab
 from learning_app_grammar import Grammar
+from file_learning_app import Summary
 
 def math_choosen(self):
     """ If the user chooses to work on math, this method is called and uses
@@ -80,7 +81,6 @@ def vocab_choosen(self):
         userGrade = "second_grade"  
         
     attempts = 0
-    answersResult = []
     score = 0
     vocab = Vocab(userGrade)
     
@@ -88,12 +88,12 @@ def vocab_choosen(self):
     for attempt in range(3):
         vocab.vocab_generator()
         vocab.question()
-        answersResult.append(vocab.user_answers())
+        user_answers = vocab.user_answers()
         score = vocab.user_score()
         attempts = attempts_taken(attempt)
         vocab.questions.clear()
     
-    return [vocab.answers, answersResult[-1], attempts, score]
+    return [vocab.answers, user_answers, attempts, score]
 
 def grammar_choosen(self):
     """ If a user chooses to work on grammar, it will create an instance of the
@@ -107,29 +107,27 @@ def grammar_choosen(self):
     Side Effects:
         prompts the user for questions, and stores the answer as input. Uses the
         input to validate if they made grammar errors and explain the issues
-        
-    Technique Credit:
-            Ramya: Taking credit for the use of composition
     """
-    grammar_user = Grammar(self.name, self.grade)
-    errors_made = []
-    error_ct = 0
-    
-    for _ in range(3):
-        sentence = input("Enter a sentence: ")
-        error_number = grammar_user.error_count(sentence)
-        if error_number == 0:
-            print("\nGreat job! No errors found.")
-        else:
-            print("\nIssues found in the sentence:") 
-            for error in grammar_user.errors:
-                print(f"{error}")
-                errors_made.append(grammar_user.errors)
-                error_ct += error_number
-
-        print("\nKeep praciticing!")
-
-    return [errors_made, error_ct]
+    results = []
+    self.error_number = 0
+    for question in range(1,4):
+        user_sentence = input(f"\nSentence {question}: Enter a sentence here:")
+        grammar_user = Grammar(self.name, self.grade)
+        
+        question_results = {
+            "punctuation": grammar_user.punctuation(user_sentence),
+            "capitalization": grammar_user.capitalization(user_sentence),
+            "word_count": grammar_user.word_count(user_sentence),
+            "pronoun_capitalization": grammar_user.pronoun_capitalization(
+                                                                (user_sentence))
+            }
+        
+        results.append(question_results)
+        self.error_number += grammar_user.error_count(user_sentence)  
+          
+        print(f"Total errors across all sentences: {self.error_number}")
+        
+        return results
 
 def attempts_taken(attempt):
     """ Calculates the number of attempts out of 3 the user takes to get the 
@@ -243,7 +241,11 @@ def main():
     user1 = User()
     print(user1.grade_level())
     result = user1.subjects_choosen()
+    
     print(result)
+    
+    summary = Summary(user1)
+    summary.results_folder(result)
     
 if __name__ == "__main__":
     main()
