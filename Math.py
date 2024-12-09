@@ -29,7 +29,7 @@ class MathQ:
             Initializes the attributes related to a set of Math questions
             
         Technique Credit:
-            Taking credit for the use of optional parameters
+            Harshitha: Taking credit for the use of optional parameters
         """
         self.grade = grade
         self.max_questions = max_questions
@@ -91,7 +91,7 @@ class MathQ:
             Prints each question and stores input in the attribute user_ans
             
         Technique Credit:
-            Taking credit for the use of list comprehensions
+            Harshitha: Taking credit for the use of list comprehensions
         """
         self.user_ans = [input(f"{q} = ") for q in self.questions]
     
