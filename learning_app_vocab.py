@@ -118,17 +118,16 @@ definition: {question_informal}"
     def user_answers(self):
         """Sorts the user's answers into a list of correct answers and a list of 
         incorrect answers.
-        
+    
         Returns:
-            a list of correct answers and a list of incorrect answers
-            
+            A tuple of all user answers, correct answers, incorrect answers
+        
         Side effects:
             appends the correct and incorrect answers into respective lists
         """
         user_answer = self.user_input[-1]
         correct_answer = self.answers[-1]
-        (self.correct.append(user_answer) if user_answer == correct_answer else 
-         self.incorrect.append(user_answer))
+        self.correct.append(user_answer) if user_answer == correct_answer else self.incorrect.append(user_answer)
         return self.correct, self.incorrect
 
     def user_score(self):
