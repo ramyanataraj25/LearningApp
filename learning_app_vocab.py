@@ -127,7 +127,8 @@ definition: {question_informal}"
         """
         user_answer = self.user_input[-1]
         correct_answer = self.answers[-1]
-        self.correct.append(user_answer) if user_answer == correct_answer else self.incorrect.append(user_answer)
+        (self.correct.append(user_answer) if user_answer == correct_answer else 
+         self.incorrect.append(user_answer))
         return self.correct, self.incorrect
 
     def user_score(self):
