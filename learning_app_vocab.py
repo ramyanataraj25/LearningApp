@@ -134,4 +134,3 @@ class Vocab:
         total_questions_answered = len(self.user_input)
         final_score = f"{correct_user_answers} / {total_questions_answered}"
         return final_score
-
