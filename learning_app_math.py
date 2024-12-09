@@ -12,7 +12,8 @@ class MathQ:
         max_questions (int): the maximum number of questions the user wants to 
         answer
         ops (list of str): the operators used in math questions
-        questions (list of str): each question that would be provided to the user
+        questions (list of str): each question that would be provided to the 
+        user
         answers (list of int): the answers to each respective question
         user_ans (list of str): the answers the user provides for each question
     """
