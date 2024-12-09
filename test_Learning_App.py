@@ -38,7 +38,6 @@ class User_testing:
         self.subjects = subjects
         
         """ Creates an instance of the user class.
-        
         Args:
             name (str): name of the student using the app
             grade (str): grade level the student is in (either K, 1st, or 2nd)
