@@ -123,7 +123,7 @@ definition: {question_informal}"
         incorrect answers.
     
         Returns:
-            A tuple of all user answers, correct answers, incorrect answers
+            a list of correct answers and a list of incorrect answers
         
         Side effects:
             appends the correct and incorrect answers into respective lists
