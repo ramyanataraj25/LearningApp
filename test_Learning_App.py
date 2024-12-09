@@ -2,7 +2,7 @@ import re
 from Math import MathQ
 from learning_app_vocab import Vocab
 from learning_app_grammar import Grammar
-from file_testing import Summary
+from file_learning_app import Summary
 
 def attempts_taken(attempt):
     """ Calculates the number of attempts out of 3 the user takes to get the 

@@ -111,18 +111,25 @@ class Vocab:
     def user_answers(self):
         """Sorts the user's answers into a list of correct answers and a list of 
         incorrect answers.
-        
+    
         Returns:
-            a list of correct answers and a list of incorrect answers
-            
+            A tuple of all user answers, correct answers, incorrect answers
+        
         Side effects:
-            appends the correct and incorrect answers into respective lists
+            Appends the correct and incorrect answers into respective lists.
         """
-        user_answer = self.user_input[-1]
-        correct_answer = self.answers[-1]
-        self.correct.append(user_answer) if user_answer == correct_answer else self.incorrect.append(user_answer)
-        return self.correct, self.incorrect
+        self.correct = []  
+        self.incorrect = []  
 
+        for user_answer, correct_answer in zip(self.user_input, self.answers):
+            if user_answer == correct_answer:
+                if user_answer not in self.correct:
+                    self.correct.append(user_answer)
+            elif user_answer not in self.incorrect:  
+                self.incorrect.append(user_answer)
+                
+        return [self.user_input, self.correct, self.incorrect]
+    
     def user_score(self):
         """Calculates the user's final score based on the questions they got 
         correct and the total questions they answered.
