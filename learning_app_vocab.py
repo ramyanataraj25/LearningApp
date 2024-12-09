@@ -40,6 +40,9 @@ class Vocab:
             opens and reads to a file
             
             appends the questions, possible answers, and answers to lists
+            
+        Technique credit:
+            Tatyana: taking credit for use of json.load()
         """
         
         with open("vocab.json", "r", encoding = "UTF-8") as f:
@@ -124,6 +127,9 @@ definition: {question_informal}"
         
         Side effects:
             appends the correct and incorrect answers into respective lists
+            
+        Technique credit:
+            Tatyana: taking credit for conditional expressions
         """
         user_answer = self.user_input[-1]
         correct_answer = self.answers[-1]
