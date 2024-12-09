@@ -1,5 +1,5 @@
 import re
-from Math import MathQ
+from learning_app_math import MathQ
 from learning_app_vocab import Vocab
 from learning_app_grammar import Grammar
 
