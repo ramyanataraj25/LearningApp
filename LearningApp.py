@@ -14,6 +14,9 @@ def math_choosen(self):
     Side effects:
         prints each math question for the grade choosen, prints the final score,
         and stores user's answers as input
+    
+    Technique Credit:
+            Ramya: Taking credit for the use of composition
     """
     count = input("How many questions would you like to get? " +
                   "(Default number of questions is 10, " + 
@@ -64,6 +67,9 @@ def vocab_choosen(self):
     Side effects:
         prints each vocab question for the grade choosen, and stores user's
         answers as input
+        
+    Technique Credit:
+            Ramya: Taking credit for the use of composition
     """
     userGrade = ""
     if self.grade == "K":
@@ -101,6 +107,9 @@ def grammar_choosen(self):
     Side Effects:
         prompts the user for questions, and stores the answer as input. Uses the
         input to validate if they made grammar errors and explain the issues
+        
+    Technique Credit:
+            Ramya: Taking credit for the use of composition
     """
     grammar_user = Grammar(self.name, self.grade)
     errors_made = []
@@ -182,6 +191,9 @@ class User:
         Side effects:
             Sets the grade attribute to the match found by the regular 
             expression
+        
+        Techniques Credit:
+            Ramya: Taking credit for the use of regular expressions
         """
         
         regex = r"([kK]|K\w+|[1]|1\w+|F\w+|[2]|2\w+|S\w+)$"
