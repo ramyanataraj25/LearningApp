@@ -203,12 +203,11 @@ class Summary():
     def results_folder(self, result):
     
         while True:
-            try:
-                folder_path = Path(input("What directory would you like the summary folder to be in: "))
-                folder_path.mkdir(parents=True, exist_ok=True)
             
-            except OSError:
-                print(f"Failed to create the folder at {folder_path}. Choose another folder name.") 
+            folder_path = Path(input("What directory would you like the summary folder to be in: "))
+            
+            if not folder_path.exists() or not folder_path.is_dir():
+                print(f"The {folder_path} directory does not exist. Choose another folder path.")
            
             else:
                 break
