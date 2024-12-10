@@ -3,31 +3,49 @@ import pandas as pd
 from pathlib import Path
 
 class Summary():
-    """ Once the user is done with the game, this class will calculate statistics about their round, like the percentage of questions 
-    answered correctly/incorrectly. These values will be printed to file.
+    """ Calculates statistics and generates barplot visualizations of the user's 
+    performance in the learning app. 
             
+    Attributes:
+        user: The user object containing user-specific information.
+        correct_ans (list): Correct answers for math questions.
+        user_ans (list): User's answers for math questions.
+        correct (list): List of correct math answers provided by the user.
+        incorrect (list): List of incorrect math answers provided by the user.
+        final_score (float): The final math score percentage.
+        error_number (int): Total number of errors for grammar exercises.
+        plot_dat (dict): Data for plotting grammar errors.
+        correct_ans_vocab (list): Correct answers for vocabulary questions.
     """
     def __init__(self, user):
-        self.user = user
         
-        self.num_questions = 0
-        self.num_attempts = 0
-        self.final_score = 0
-        self.error_number = 0
-        self.errors = ""
-        self.plot_dat = {}
-        self.correct = []
-        self.incorrect = []
+        self.user = user
         self.correct_ans = []
         self.user_ans = []
+        self.correct = []
+        self.incorrect = []
+        self.final_score = 0
+        self.error_number = 0
+        self.plot_dat = {}
         self.correct_ans_vocab = []
 
     def bar_visual_math(self, filepath, stats):
-        
+        """Creates a bar chart for the user's math performance 
+        over multiple attempts.
+
+        Args:
+            filepath (Path): The file path to save the bar plot.
+            stats (list): A list containing a list of correct answers, 
+            a list of user answers, and number of attempts
+
+        Side Effects:
+            Saves a bar chart to the specified filepath.
+            
+        Technique Credit:
+            Nivitha: Taking credit for the use of pyplot visualizations
+        """
         self.correct_ans = stats[0]
         self.user_ans = stats[1]
-        self.num_attempts = stats[2]
-        self.num_questions = len(self.correct_ans)
         
         attempt_number = []
         perc_correct = []
@@ -38,7 +56,7 @@ class Summary():
             
             num_correct = 0
             
-            for answer in range(self.num_questions):
+            for answer in range(len(self.correct_ans)):
                 if self.correct_ans[answer] == int(self.user_ans[attempt][answer]):
                     num_correct += 1
                     
@@ -53,22 +71,43 @@ class Summary():
         
         df = pd.DataFrame(plot_data)  
         
-        barplot = df.plot.bar(x = "Attempt Number", y = "Percentage of Correctly Answered Questions")
+        barplot = df.plot.bar(
+            x = "Attempt Number", y = "Percentage of Correctly Answered Questions"
+            )
+        
         barplot.get_legend().set_visible(False)
         
         plt.xticks(rotation = 0)
         plt.xlabel("Attempt Number")
         plt.ylabel("Percentage of Correctly Answered Questions")
-        plt.title(f"{self.user.grade} Level: {self.user.name}'s Performance Over {self.num_attempts} Attempt(s) in Math")
+        plt.title(
+            f"{self.user.grade} Level: {self.user.name}'s Performance"
+            f"Over {len(self.user_ans)} Attempt(s) in Math"
+        )
+        
         plt.ylim(0, 110)
         
         plt.savefig(str(filepath))
         plt.close()
     
     def bar_visual_vocab(self, filepath, stats): 
-        
+        """Creates a stacked bar chart showing the user's vocabulary performance 
+        across multiple questions.
+
+        Args:
+            filepath (Path): The file path to save the bar plot.
+            stats (list): A list containing a list of correct answers, 
+            list of user's answers (correct followed by incorrect), 
+            number of attempts, and score.
+
+        Side Effects:
+            Saves a stacked bar chart to the specified filepath.
+            
+        Technique Credit:
+            Nivitha: Taking credit for the use of pyplot visualizations
+        """
         self.correct_ans_vocab = stats[0]
-        user_ans, self.correct, self.incorrect = stats[1]
+        self.correct, self.incorrect = stats[1]
         self.attempts = stats[2]
         self.score = stats[3]
         
@@ -80,7 +119,10 @@ class Summary():
          
         for answer in range(len(self.correct_ans_vocab)):
             
-            if self.correct_ans_vocab[answer] == user_ans[answer]:
+            if (
+                self.correct_ans_vocab[answer] in self.correct and 
+                self.correct_ans_vocab[answer] not in self.incorrect
+            ):
                 num_correct += 1
 
             else:
@@ -100,7 +142,9 @@ class Summary():
         plt.xticks(rotation = 0)
         plt.xlabel("Question Number")
         plt.ylabel("Percentage of Total Correct/Incorrect Questions")
-        plt.title(f"{self.user.grade} Level: {self.user.name}'s Vocabulary Performance")
+        plt.title(
+            f"{self.user.grade} Level: {self.user.name}'s Vocabulary Performance"
+        )
         plt.legend(loc="upper left")
         plt.ylim(0, 119)
         
@@ -109,8 +153,19 @@ class Summary():
         
        
     def bar_visual_grammar(self, filepath, stats): 
-        """stacked bar graph, were x-categories are sentence 1, sentence 2, sentence 3. y-axis is percentage of 
-        one of the 4 errors. We have the categories as the errors. 
+        """Creates a bar chart showing a breakdown of grammatical errors 
+        across sentences.
+
+        Args:
+            filepath (Path): The file path to save the bar plot.
+            stats (list): A list of dictionaries containing error counts for each 
+            grammatical error per sentence.
+            
+        Side Effects:
+            Saves a bar chart to the specified filepath.
+            
+        Technique Credit:
+            Nivitha: Taking credit for the use of pyplot visualizations
         """
         list_punc = []
         list_cap = []
@@ -150,7 +205,9 @@ class Summary():
         df = pd.DataFrame(self.plot_dat, index = attempt_labels)
         
         barplot = df.plot.bar()
-        barplot.set_title(f"{self.user.grade} Level: {self.user.name}'s Grammar Performance")
+        barplot.set_title(
+            f"{self.user.grade} Level: {self.user.name}'s Grammar Performance"
+        )
         barplot.set_xlabel("Sentence Number")
         barplot.set_ylabel("Number of Errors")
         barplot.legend(title="Error Type", loc="upper left")
@@ -161,8 +218,15 @@ class Summary():
         plt.savefig(str(filepath))
         plt.close()
         
-    def stats(self):     
-        heading = f"{self.user.name} practiced {self.user.subjects} at the {self.user.grade} level.\n"
+    def stats(self):   
+        """Generates a summary of the user's performance based on the 
+        chosen subject.
+
+        Returns:
+            str: A string summarizing the user's performance.
+        """  
+        heading = (f"{self.user.name} practiced {self.user.subjects} " 
+        f"at the {self.user.grade} level.\n")
     
         if self.user.subjects == "math":
             cor = f"Correct Answers: {self.correct_ans}\n"  
@@ -172,8 +236,8 @@ class Summary():
                 incor += f"Attempt {attempt} Answers: {answers}\n"
                 
                 
-            results = (f"Questions Answered: {self.num_questions}\n" + 
-                f"Number of Attempts: {self.num_attempts}\n\n" +
+            results = (f"Questions Answered: {len(self.user_ans)}\n" + 
+                f"Number of Attempts: {len(self.user_ans)}\n\n" +
                 f"{cor}\n{incor}\n\n"
                 f"Final Score: {self.final_score}%"
                 )
@@ -190,24 +254,55 @@ class Summary():
             return heading + results
                
         elif self.user.subjects == "grammar":
+            start_cap = (
+                (sum(self.plot_dat['Sentence Starting Capitalization Error'])/self.error_number)*100
+            )
+            pronoun_cap = (
+                (sum(self.plot_dat['Pronoun Capitalization Error'])/self.error_number)*100
+            )
             results = ("Number of Sentences: 3\n\n" + 
                        "Error Percentages:\n" +
-                       f"Punctuation Errors: {(sum(self.plot_dat['Punctuation Error'])/self.error_number)*100}%\n" +
-                       f"Sentence Starting Capitalizations: {(sum(self.plot_dat['Sentence Starting Capitalization Error'])/self.error_number)*100}%\n" +
-                       f"Word Count Errors: {(sum(self.plot_dat['Word Count Error']))/self.error_number*100}%\n" +
-                       f"Pronoun Capitalization Errors: {(sum(self.plot_dat['Pronoun Capitalization Error']))/self.error_number*100}%\n\n" +
+                       f"Punctuation Errors: "
+                       f"{(sum(self.plot_dat['Punctuation Error'])/self.error_number)*100}%\n" +
+                       
+                       f"Sentence Starting Capitalization Error: "
+                       f"{start_cap}%\n" +
+                       
+                       f"Word Count Errors: " 
+                       f"{(sum(self.plot_dat['Word Count Error'])/self.error_number)*100}%\n" +
+                       
+                       f"Pronoun Capitalization Errors: "  
+                       f"{pronoun_cap}%\n\n" +
+                       
                 f"Total Errors: {self.error_number}"
-                )
+            )
         return heading + results
         
     def results_folder(self, result):
-    
+        """Generates and saves bar plot and performance summaries in a 
+        user-specified directory using user-specified file names.
+            
+        Args:
+            result (tuple): A tuple containing stats required for barplots
+             and summaries.
+
+        Side Effects:
+            Creates summary files and visualizations in the specified directory.
+            Prints the location of saved files.
+            
+        Technique Credit:
+            Nivitha: Taking credit for the use of with statement
+        """
         while True:
             
-            folder_path = Path(input("What directory would you like the summary folder to be in: "))
+            folder_path = Path(input
+                               ("What directory would you like for the summary folder: ")
+                               )
             
             if not folder_path.exists() or not folder_path.is_dir():
-                print(f"The {folder_path} directory does not exist. Choose another folder path.")
+                print(
+                    f"The {folder_path} directory does not exist. Choose another folder path."
+                )
            
             else:
                 break
