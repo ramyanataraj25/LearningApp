@@ -111,7 +111,7 @@ def grammar_choosen(self):
     results = []
     self.error_number = 0
     for question in range(1,4):
-        user_sentence = input(f"\nSentence {question}: Enter a sentence here:")
+        user_sentence = input(f"\nSentence {question}: Enter a sentence here: ")
         grammar_user = Grammar(self.name, self.grade)
         
         question_results = {
@@ -127,7 +127,7 @@ def grammar_choosen(self):
           
         print(f"Total errors across all sentences: {self.error_number}")
         
-        return results
+    return results
 
 def attempts_taken(attempt):
     """ Calculates the number of attempts out of 3 the user takes to get the 
