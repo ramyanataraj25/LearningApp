@@ -1,0 +1,10 @@
+Daniel practiced grammar at the K level.
+Number of Sentences: 3
+
+Error Percentages:
+Punctuation Errors: 66.66666666666666%
+Sentence Starting Capitalizations: 33.33333333333333%
+Word Count Errors: 0.0%
+Pronoun Capitalization Errors: 0.0%
+
+Total Errors: 3
